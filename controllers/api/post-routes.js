@@ -1,58 +1,56 @@
-const router = require('express').Router();
-const { Post } = require('../../models/');
-const withAuth = require('../../utils/auth');
+const router = require("express").Router();
+const { Post, Comment, User } = require("../../models/");
+const withAuth = require("../../utils/auth");
 
 //create a post
-router.post('/', withAuth, async (req, res) => {
+router.post("/", withAuth, async (req, res) => {
   const body = req.body;
-    console.log(body);
-  try {
-    const newPost = await Post.create({ ...body, userId: req.session.userId });
-    console.log("Here is the new post: ",  newPost);
-    res.json(newPost);
-     } catch (err) {
-       console.log('IT FAILED!', err);
-    res.status(500).json(err);
-  }
+  console.log(req.session.userId);
+  Post.create({ ...body, userId: req.session.userId })
+    .then((newPost) => {
+      res.json(newPost);
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
 });
 
 //update the post
-router.put('/:id', withAuth, async (req, res) => {
-  try {
-    console.log('here is the req.body', req.body);
-    const [affectedRows] = await Post.update(req.body, {
-      where: {
-        id: req.params.id,
-      },
+router.put("/:id", withAuth, async (req, res) => {
+  Post.update(req.body, {
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((affectedRows) => {
+      if (affectedRows > 0) {
+        res.status(200).end();
+      } else {
+        res.status(404).end();
+      }
+    })
+    .catch((err) => {
+      res.status(500).json(err);
     });
-
-    if (affectedRows > 0) {
-      res.status(200).end();
-    } else {
-      res.status(404).end();
-    }
-  } catch (err) {
-    res.status(500).json(err);
-  }
 });
 
 //delete the post
-router.delete('/:id', withAuth, async (req, res) => {
-  try {
-    const [affectedRows] = Post.destroy({
-      where: {
-        id: req.params.id,
-      },
+router.delete("/:id", withAuth, async (req, res) => {
+  Post.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((affectedRows) => {
+      if (affectedRows > 0) {
+        res.status(200).end();
+      } else {
+        res.status(404).end();
+      }
+    })
+    .catch((err) => {
+      res.status(500).json(err);
     });
-
-    if (affectedRows > 0) {
-      res.status(200).end();
-    } else {
-      res.status(404).end();
-    }
-  } catch (err) {
-    res.status(500).json(err);
-  }
 });
 
 module.exports = router;
