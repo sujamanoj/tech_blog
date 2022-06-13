@@ -1,9 +1,9 @@
 :root {
   --primary: #ccdad1;
   --secondary: #9caea9;
-  --tertiary: #788585;
-  --light-dark: #6f6866;
-  --dark: #38302e;
+  --tertiary: #34bdbd;
+  --light-dark: #d5755a;
+  --dark: #5795d7;
   --border-radius: 0.3rem;
 }
 
@@ -61,7 +61,7 @@ p {
 input {
     width: 100%;
     border: 1px solid #ccc;
-    background: #FFF;
+    background: rgb(112, 110, 110);
     margin: 0 0 5px;
     padding: 10px;
 }
