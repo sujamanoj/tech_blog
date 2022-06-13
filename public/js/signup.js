@@ -1,4 +1,5 @@
-const signupFormHandler = async function (event) {
+
+const signupFormHandler = async function(event) {
   event.preventDefault();
 
   const usernameEl = document.querySelector("#username-input-signup");
@@ -7,14 +8,14 @@ const signupFormHandler = async function (event) {
     method: "post",
     body: JSON.stringify({
       username: usernameEl.value,
-      password: passwordEl.value,
+      password: passwordEl.value
     }),
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json" }
   })
-    .then(function () {
+    .then(function() {
       document.location.replace("/dashboard");
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 };
 
 document

@@ -1,4 +1,4 @@
-const newFormHandler = async function (event) {
+const newFormHandler = async function(event) {
   event.preventDefault();
 
   const title = document.querySelector('input[name="post-title"]').value;
@@ -8,11 +8,11 @@ const newFormHandler = async function (event) {
     method: "POST",
     body: JSON.stringify({
       title,
-      body,
+      body
     }),
     headers: {
-      "Content-Type": "application/json",
-    },
+      "Content-Type": "application/json"
+    }
   });
 
   document.location.replace("/dashboard");
